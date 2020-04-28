@@ -1,15 +1,13 @@
 package com.explore.explorecassandra.controller;
 
+import com.explore.explorecassandra.beans.request.CoursesRequestBean;
 import com.explore.explorecassandra.beans.response.CoursesResponseBean;
 import com.explore.explorecassandra.service.ICoursesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.ws.rs.core.Response;
 
 @RestController
 @RequestMapping("/courses")
@@ -25,5 +23,14 @@ public class CoursesController {
     public CoursesResponseBean fetchAll(@PathVariable("courseId") String courseId){
         LOGGER.info("Received request {}", courseId);
         return service.fetchById(courseId);
+    }
+
+    @PostMapping
+    public Response save(@RequestBody CoursesRequestBean request){
+        LOGGER.info("Received Courses save request");
+
+        service.save(request);
+
+        return Response.ok().build();
     }
 }

@@ -2,6 +2,7 @@ package com.explore.explorecassandra.service;
 
 
 import com.explore.explorecassandra.beans.model.Course;
+import com.explore.explorecassandra.beans.request.CoursesRequestBean;
 import com.explore.explorecassandra.beans.response.CoursesResponseBean;
 import com.explore.explorecassandra.beans.response.ResponseStatusCode;
 import com.explore.explorecassandra.beans.response.ResponseStatusMessage;
@@ -37,5 +38,10 @@ public class CoursesService implements ICoursesService{
         }
 
         return responseBean;
+    }
+
+    @Override
+    public void save(CoursesRequestBean request) {
+        repository.saveAll(request.getCourses());
     }
 }
