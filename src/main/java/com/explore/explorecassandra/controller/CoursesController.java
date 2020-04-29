@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.core.Response;
-
 @RestController
 @RequestMapping("/courses")
 public class CoursesController {
@@ -26,11 +24,8 @@ public class CoursesController {
     }
 
     @PostMapping
-    public Response save(@RequestBody CoursesRequestBean request){
+    public void save(@RequestBody CoursesRequestBean request){
         LOGGER.info("Received Courses save request");
-
         service.save(request);
-
-        return Response.ok().build();
     }
 }
