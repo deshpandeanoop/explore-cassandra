@@ -6,10 +6,12 @@ import com.explore.explorecassandra.beans.request.CoursesRequestBean;
 import com.explore.explorecassandra.beans.response.CoursesResponseBean;
 import com.explore.explorecassandra.beans.response.ResponseStatusCode;
 import com.explore.explorecassandra.beans.response.ResponseStatusMessage;
+import com.explore.explorecassandra.kafka.producer.CourseKafkaProducer;
 import com.explore.explorecassandra.repository.CoursesRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.security.acl.LastOwnerException;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,9 +19,11 @@ import java.util.List;
 public class CoursesService implements ICoursesService{
 
     private final CoursesRepository repository;
+    private final CourseKafkaProducer courseKafkaProducer;
 
-    public CoursesService(CoursesRepository repository) {
+    public CoursesService(CoursesRepository repository, CourseKafkaProducer courseKafkaProducer) {
         this.repository = repository;
+        this.courseKafkaProducer = courseKafkaProducer;
     }
 
     @Override
@@ -42,6 +46,11 @@ public class CoursesService implements ICoursesService{
 
     @Override
     public void save(CoursesRequestBean request) {
-        repository.saveAll(request.getCourses());
+        if(CollectionUtils.isEmpty(request.getCourses())){
+            return;
+        }
+
+        request.getCourses()
+                .forEach(courseKafkaProducer :: publish);
     }
 }

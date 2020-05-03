@@ -1,0 +1,23 @@
+{
+  "type": "record",
+  "namespace": "com.explore.explorecassandra.avro",
+  "name": "Course",
+  "version": "1",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "doc": "Id of the course"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Name of the course"
+    },
+    {
+      "name": "author",
+      "type": "string",
+      "doc": "Author of course"
+    }
+  ]
+}

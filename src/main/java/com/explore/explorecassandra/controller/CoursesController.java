@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/courses")
 public class CoursesController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CoursesController.class);
-    private ICoursesService service;
+    private final ICoursesService service;
 
     public CoursesController(ICoursesService service) {
         this.service = service;
